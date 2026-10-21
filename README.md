@@ -9,4 +9,4 @@
 
 Integrarea permite monitorizarea informațiilor asociate vehiculelor și contului utilizatorului, inclusiv roviniete, peaje și, acolo unde este disponibil, informații aferente sistemului TollRo.
 
-tollro este noul sistem electronic de tarifare rutieră al CNAIR, care începând cu 1 octombrie 2026 înlocuiește sistemele anterioare pentru gestionarea rovinietei, peajului și tarifării TollRo.
+CNAIR eToll este noul sistem electronic de tarifare rutieră al CNAIR, care începând cu 1 octombrie 2026 înlocuiește sistemele anterioare pentru gestionarea rovinietei, peajului și tarifării TollRo.
