@@ -1,0 +1,305 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectare la CNAIR eToll",
+        "description": "Introdu datele contului tău eToll — aceleași cu care te autentifici în aplicația TollRo sau pe portal.etoll.ro. Integrarea doar citește informațiile din cont (vehicule, roviniete, facturi și notificări); nu face cumpărături și nu modifică nimic în contul tău.",
+        "data": {
+          "username": "Adresă de e-mail sau număr de telefon",
+          "password": "Parolă"
+        },
+        "data_description": {
+          "username": "Datele de autentificare pe care le folosești în aplicația TollRo.",
+          "password": "Parola se păstrează local, în configurația Home Assistant, și e folosită doar pentru a reconecta contul atunci când sesiunea expiră."
+        }
+      },
+      "reconfigure": {
+        "title": "Actualizează datele de autentificare",
+        "description": "Modifică adresa de e-mail (sau numărul de telefon) ori parola folosite de integrare — de exemplu, după ce ți-ai schimbat parola în aplicația TollRo sau pe portal.etoll.ro. Datele noi sunt verificate înainte de a fi salvate, iar vehiculele, entitățile și istoricul rămân neschimbate.",
+        "data": {
+          "username": "Adresă de e-mail sau număr de telefon",
+          "password": "Parola nouă"
+        },
+        "data_description": {
+          "username": "Las-o neschimbată dacă s-a modificat doar parola.",
+          "password": "Parola pe care o folosești acum în aplicația TollRo."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconectează contul eToll",
+        "description": "Home Assistant nu se mai poate autentifica în contul {username}, cel mai probabil pentru că parola a fost schimbată. Introdu parola actuală — cea pe care o folosești în aplicația TollRo — ca actualizările să continue.",
+        "data": {
+          "password": "Parola actuală"
+        },
+        "data_description": {
+          "password": "Se păstrează local, în Home Assistant, și e folosită doar pentru a menține contul conectat."
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Autentificarea a eșuat. Verifică adresa de e-mail (sau numărul de telefon) și parola — sunt aceleași ca în aplicația TollRo.",
+      "cannot_connect": "Serviciul eToll nu a putut fi contactat. Verifică conexiunea la internet și încearcă din nou peste câteva minute; dacă problema persistă, e posibil ca serverele CNAIR să fie temporar indisponibile.",
+      "unknown": "A apărut o eroare neașteptată. Activează jurnalizarea de depanare pentru această integrare, încearcă din nou, apoi caută detaliile în jurnalul Home Assistant."
+    },
+    "abort": {
+      "already_configured": "Acest cont eToll este deja adăugat în Home Assistant.",
+      "reconfigure_successful": "Datele de autentificare au fost actualizate, iar integrarea s-a reîncărcat.",
+      "reauth_successful": "Contul a fost reconectat, iar actualizările au fost reluate.",
+      "wrong_account": "Datele introduse aparțin altui cont eToll decât cel configurat aici. Pentru un alt cont, adaugă integrarea din nou, ca intrare separată."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "unread_notifications": {
+        "name": "Notificări necitite"
+      },
+      "service_status": {
+        "name": "Starea serviciului eToll",
+        "state": {
+          "operational": "Funcțional",
+          "performance_issues": "Funcționează cu întârzieri",
+          "partial_outage": "Întrerupere parțială",
+          "major_outage": "Întrerupere majoră",
+          "unknown": "Stare necunoscută"
+        },
+        "state_attributes": {
+          "last_updated": {
+            "name": "Ultima actualizare a stării"
+          }
+        }
+      },
+      "latest_invoice": {
+        "name": "Ultima factură",
+        "state_attributes": {
+          "invoice_number": {
+            "name": "Număr factură"
+          },
+          "payment_date": {
+            "name": "Data plății"
+          },
+          "payment_method": {
+            "name": "Metodă de plată",
+            "state": {
+              "euplatesc": "Card bancar online (EuPlătesc)",
+              "google_pay": "Google Pay",
+              "apple_pay": "Apple Pay"
+            }
+          },
+          "billed_service": {
+            "name": "Serviciu facturat",
+            "state": {
+              "vignette": "Rovinietă",
+              "bridge": "Treceri de pod",
+              "route": "Tichet de rută",
+              "per_km": "Credite TollRo",
+              "multiple": "Mai multe servicii"
+            }
+          },
+          "amount_without_vat": {
+            "name": "Valoare fără TVA (lei)"
+          },
+          "vat_amount": {
+            "name": "TVA (lei)"
+          },
+          "vat_rate": {
+            "name": "Cota de TVA (%)"
+          }
+        }
+      },
+      "vehicle_category": {
+        "name": "Categorie vehicul",
+        "state": {
+          "a": "A – Autoturisme (sub 8+1 locuri)",
+          "b": "B – Transport marfă, MTMA de până la 3,5 t",
+          "c": "C – Transport persoane, între 9 și 23 de locuri",
+          "d": "D – Transport persoane, peste 23 de locuri",
+          "i": "I – Transport marfă, MTMA peste 3,5 t și până la 7,5 t",
+          "ii": "II – Transport marfă, MTMA peste 7,5 t și sub 12 t",
+          "iii": "III – Transport marfă, MTMA de 12 t sau mai mult"
+        }
+      },
+      "vignette_valid_until": {
+        "name": "Rovinietă valabilă până la",
+        "state_attributes": {
+          "days_remaining": {
+            "name": "Zile rămase"
+          },
+          "valid_from": {
+            "name": "Valabilă de la"
+          },
+          "validity_period": {
+            "name": "Perioadă de valabilitate",
+            "state": {
+              "one_day": "1 zi",
+              "ten_days": "10 zile",
+              "thirty_days": "30 de zile",
+              "sixty_days": "60 de zile",
+              "twelve_months": "12 luni"
+            }
+          },
+          "vignette_status": {
+            "name": "Stare rovinietă",
+            "state": {
+              "active": "Activă",
+              "cancelled": "Anulată",
+              "consumed": "Consumată",
+              "draft": "Ciornă (neplătită)",
+              "expired": "Expirată",
+              "refunded": "Restituită"
+            }
+          },
+          "price_paid": {
+            "name": "Preț plătit (lei)"
+          },
+          "vignette_serial": {
+            "name": "Serie rovinietă"
+          },
+          "purchased_at": {
+            "name": "Data achiziției"
+          }
+        }
+      },
+      "total_paid": {
+        "name": "Total plătit în anul curent",
+        "state_attributes": {
+          "invoices_count": {
+            "name": "Facturi în anul curent"
+          },
+          "amount_without_vat": {
+            "name": "Valoare fără TVA (lei)"
+          },
+          "vat_amount": {
+            "name": "TVA (lei)"
+          },
+          "last_payment": {
+            "name": "Ultima plată"
+          },
+          "yearly_totals": {
+            "name": "Totaluri pe ani (lei)"
+          }
+        }
+      },
+      "vehicle_spending": {
+        "name": "Cheltuieli în anul curent",
+        "state_attributes": {
+          "vignette_amount": {
+            "name": "Roviniete (lei)"
+          },
+          "bridge_amount": {
+            "name": "Treceri de pod (lei)"
+          },
+          "route_amount": {
+            "name": "Tichete de rută (lei)"
+          },
+          "purchases_count": {
+            "name": "Achiziții în anul curent"
+          },
+          "last_purchase": {
+            "name": "Ultima achiziție"
+          },
+          "yearly_totals": {
+            "name": "Totaluri pe ani (lei)"
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "vehicle_data": {
+        "name": "Datele vehiculului",
+        "state": {
+          "on": "Necesită verificare",
+          "off": "În regulă"
+        },
+        "state_attributes": {
+          "plate_number": {
+            "name": "Număr de înmatriculare"
+          },
+          "vin": {
+            "name": "Serie de șasiu (VIN)"
+          },
+          "registration_certificate": {
+            "name": "Serie certificat de înmatriculare"
+          },
+          "vehicle_type": {
+            "name": "Tip vehicul",
+            "state": {
+              "car": "Autovehicul",
+              "trailer": "Remorcă"
+            }
+          },
+          "emission_standard": {
+            "name": "Clasă de emisii",
+            "state": {
+              "none": "Fără normă de poluare",
+              "electric": "Electric",
+              "eev": "EEV",
+              "euro_0": "Euro 0",
+              "euro_1": "Euro 1",
+              "euro_2": "Euro 2",
+              "euro_3": "Euro 3",
+              "euro_4": "Euro 4",
+              "euro_5": "Euro 5",
+              "euro_6": "Euro 6",
+              "euro_7": "Euro 7"
+            }
+          },
+          "registration_country": {
+            "name": "Țara de înmatriculare"
+          },
+          "max_authorised_mass": {
+            "name": "Masă totală maximă autorizată (kg)"
+          },
+          "bridge_toll_category": {
+            "name": "Categorie pentru treceri de pod"
+          },
+          "temporary_plate": {
+            "name": "Număr de înmatriculare provizoriu"
+          },
+          "favorite": {
+            "name": "Vehicul favorit"
+          }
+        }
+      },
+      "vignette_valid": {
+        "name": "Valabilitate rovinietă",
+        "state": {
+          "on": "Valabilă",
+          "off": "Expirată sau lipsă"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "licenta": {
+        "title": "Licență CNAIR eToll",
+        "description": "{license_status}\n\nIntrodu cheia de licență pentru a activa sau reînnoi integrarea.",
+        "data": {
+          "license_key": "Cheie de licență"
+        },
+        "data_description": {
+          "license_key": "Cheia primită pe e-mail, de forma ETOLL-XXXX-XXXX-XXXX-XXXX."
+        }
+      }
+    },
+    "error": {
+      "license_key_empty": "Introdu o cheie de licență.",
+      "license_key_invalid": "Cheie de licență invalidă. Verifică formatul și încearcă din nou.",
+      "license_already_used": "Această cheie de licență a fost deja folosită pe altă instalare.",
+      "license_key_expired": "Această cheie de licență a expirat.",
+      "license_fingerprint_mismatch": "Această cheie de licență este asociată altei instalări.",
+      "license_network_error": "Serverul de licențe nu poate fi contactat. Verifică conexiunea la internet și încearcă din nou.",
+      "license_server_error": "Eroare la serverul de licențe. Încearcă din nou mai târziu."
+    }
+  },
+  "issues": {
+    "trial_expired": {
+      "title": "Perioada de evaluare CNAIR eToll s-a încheiat",
+      "description": "Perioada de evaluare gratuită pentru integrarea CNAIR eToll s-a încheiat.\n\nSenzorii sunt dezactivați până la obținerea unei licențe.\n\n[Obține o licență]({learn_more_url})"
+    },
+    "license_expired": {
+      "title": "Licența CNAIR eToll a expirat",
+      "description": "Licența pentru integrarea CNAIR eToll a expirat.\n\nSenzorii sunt dezactivați până la reînnoirea licenței.\n\n[Reînnoiește licența]({learn_more_url})"
+    }
+  }
+}
