@@ -1,0 +1,110 @@
+{
+  "repo": "cnecrea/tollro",
+  "prima_colectare": "2026-10-22",
+  "zilnic": {
+    "2026-10-08": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 11,
+      "views_unice": 7
+    },
+    "2026-10-09": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 21,
+      "views_unice": 4
+    },
+    "2026-10-10": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 6,
+      "views_unice": 2
+    },
+    "2026-10-11": {
+      "clones_total": 2,
+      "clones_unice": 2,
+      "views_total": 4,
+      "views_unice": 2
+    },
+    "2026-10-12": {
+      "clones_total": 2,
+      "clones_unice": 2,
+      "views_total": 19,
+      "views_unice": 7
+    },
+    "2026-10-13": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 2,
+      "views_unice": 1
+    },
+    "2026-10-14": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 0,
+      "views_unice": 0
+    },
+    "2026-10-15": {
+      "clones_total": 4,
+      "clones_unice": 4,
+      "views_total": 6,
+      "views_unice": 2
+    },
+    "2026-10-16": {
+      "clones_total": 2,
+      "clones_unice": 2,
+      "views_total": 4,
+      "views_unice": 2
+    },
+    "2026-10-17": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 0,
+      "views_unice": 0
+    },
+    "2026-10-18": {
+      "clones_total": 1,
+      "clones_unice": 1,
+      "views_total": 12,
+      "views_unice": 4
+    },
+    "2026-10-19": {
+      "clones_total": 2,
+      "clones_unice": 2,
+      "views_total": 1,
+      "views_unice": 1
+    },
+    "2026-10-20": {
+      "clones_total": 28,
+      "clones_unice": 14,
+      "views_total": 0,
+      "views_unice": 0
+    },
+    "2026-10-21": {
+      "clones_total": 8,
+      "clones_unice": 6,
+      "views_total": 1,
+      "views_unice": 1
+    },
+    "2026-10-22": {
+      "stars": 4,
+      "forks": 0,
+      "watchers": 5,
+      "open_issues": 0,
+      "referrers": [
+        {
+          "sursa": "github.com",
+          "vizite": 30,
+          "vizitatori_unici": 15
+        },
+        {
+          "sursa": "Bing",
+          "vizite": 1,
+          "vizitatori_unici": 1
+        }
+      ]
+    }
+  },
+  "releases": {},
+  "ultima_actualizare": "2026-10-22T10:45:56Z"
+}
