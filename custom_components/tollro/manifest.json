@@ -1,12 +1,13 @@
 {
   "domain": "tollro",
-  "name": "CNAIR eTOLL",
-  "version": "0.1.0",
-  "documentation": "https://github.com/cnecrea/tollro",
-  "issue_tracker": "https://github.com/cnecrea/tollro/issues",
-  "codeowners": ["@cnecrea"],
+  "name": "CNAIR eToll",
+  "codeowners": [
+    "@cnecrea"
+  ],
   "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/cnecrea/tollro",
   "iot_class": "cloud_polling",
-  "integration_type": "hub",
-  "requirements": []
+  "issue_tracker": "https://github.com/cnecrea/tollro/issues",
+  "version": "0.1.0"
 }
