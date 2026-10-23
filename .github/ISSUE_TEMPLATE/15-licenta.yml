@@ -27,7 +27,7 @@ body:
       label: Integrarea vizată
       description: Pentru care integrare solicitați licența?
       options:
-        - CNAIR eTOLL
+        - CNAIR eToll
     validations:
       required: true
 
