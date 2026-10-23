@@ -29,7 +29,7 @@ body:
       label: Integrarea vizată
       description: Pentru care integrare raportați problema?
       options:
-        - CNAIR eTOLL
+        - CNAIR eToll
     validations:
       required: true
 
