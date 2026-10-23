@@ -1,0 +1,24 @@
+name: Procesare problemă licență
+on:
+  issues:
+    types: [opened]
+jobs:
+  dispatch:
+    if: contains(github.event.issue.labels.*.name, 'problemă licență')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trimite la procesare
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.HUBINTELIGENT_PAT }}
+          repository: cnecrea/automation
+          event-type: problema-licenta
+          client-payload: |
+            {
+              "repo_owner": "${{ github.repository_owner }}",
+              "repo_name": "${{ github.event.repository.name }}",
+              "issue_number": ${{ github.event.issue.number }},
+              "issue_title": ${{ toJSON(github.event.issue.title) }},
+              "issue_author": "${{ github.event.issue.user.login }}",
+              "issue_body": ${{ toJSON(github.event.issue.body) }}
+            }
