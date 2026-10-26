@@ -3,7 +3,15 @@
     "step": {
       "user": {
         "title": "Connect to CNAIR eToll",
-        "description": "Enter your eToll account details — the same ones you use in the TollRo app or on portal.etoll.ro. The integration only reads information from your account (vehicles, Ro-vignettes, invoices and notifications); it never makes purchases or changes anything in your account.",
+        "description": "Choose how you sign in — the same way as in the TollRo app. The integration only reads information from your account (vehicles, Ro-vignettes, invoices and notifications); it never makes purchases or changes anything in your account.\n\nIf you created your eToll account with ROeID, Google or eIDAS, you don't have an eToll password: choose the official eToll sign-in page.",
+        "menu_options": {
+          "password": "Email (or phone number) and password",
+          "browser": "Official eToll sign-in page (ROeID, Google, eIDAS)"
+        }
+      },
+      "password": {
+        "title": "Sign in with your password",
+        "description": "Enter your eToll account details — the same ones you use in the TollRo app or on portal.etoll.ro.",
         "data": {
           "username": "Email address or phone number",
           "password": "Password"
@@ -14,6 +22,14 @@
         }
       },
       "reconfigure": {
+        "title": "Update how you sign in",
+        "description": "Choose how the integration connects to your eToll account — for example after you changed your password, or to switch to ROeID, Google or eIDAS. The new sign-in is checked before it is saved; your vehicles, entities and history stay exactly as they are.",
+        "menu_options": {
+          "reconfigure_password": "Email (or phone number) and password",
+          "reconfigure_browser": "Official eToll sign-in page (ROeID, Google, eIDAS)"
+        }
+      },
+      "reconfigure_password": {
         "title": "Update your sign-in details",
         "description": "Change the email address (or phone number) or the password the integration uses — for example after you changed your password in the TollRo app or on portal.etoll.ro. The new details are checked before they are saved; your vehicles, entities and history stay exactly as they are.",
         "data": {
@@ -34,10 +50,14 @@
         "data_description": {
           "password": "It is stored locally in Home Assistant and used only to keep the account connected."
         }
+      },
+      "reauth_browser": {
+        "title": "Reconnect your eToll account",
+        "description": "Home Assistant no longer has access to the account {account}. Select Submit: the official eToll sign-in page opens, you sign in again (ROeID, Google or eIDAS) and updates resume."
       }
     },
     "error": {
-      "invalid_auth": "Sign-in failed. Check your email address (or phone number) and password — they are the same as in the TollRo app.",
+      "invalid_auth": "Sign-in failed. Check your email address (or phone number) and password — they are the same as in the TollRo app. If you created your account with ROeID, Google or eIDAS, you don't have an eToll password: go back and choose the official eToll sign-in page.",
       "cannot_connect": "The eToll service could not be reached. Check your internet connection and try again in a few minutes; if it keeps happening, CNAIR's servers may be temporarily unavailable.",
       "unknown": "Something unexpected went wrong. Enable debug logging for this integration, try again, then check the Home Assistant log for details."
     },
@@ -45,7 +65,18 @@
       "already_configured": "This eToll account has already been added to Home Assistant.",
       "reconfigure_successful": "Your sign-in details have been updated and the integration has been reloaded.",
       "reauth_successful": "Your account is connected again and updates have resumed.",
-      "wrong_account": "These details belong to a different eToll account than the one configured here. To add another account, set the integration up again as a separate entry."
+      "wrong_account": "You signed in to a different eToll account than the one configured here. To add another account, set the integration up again as a separate entry.",
+      "no_refresh_token": "The eToll server did not grant lasting access to the account, so the integration would disconnect after 30 minutes. Please try again; if it keeps happening, open an issue on GitHub.",
+      "invalid_auth": "The eToll server refused the access granted on the sign-in page. Please try again.",
+      "cannot_connect": "The eToll service could not be reached. Check your internet connection and try again in a few minutes.",
+      "unknown": "Something unexpected went wrong. Enable debug logging for this integration, try again, then check the Home Assistant log for details.",
+      "authorize_url_timeout": "The eToll sign-in page could not be prepared in time. Please try again.",
+      "no_url_available": "Home Assistant has no address to return to after signing in. See {docs_url}",
+      "oauth_error": "The eToll server sent an unexpected response while signing in.",
+      "oauth_failed": "Access to the account could not be obtained from the eToll server. Please try again.",
+      "oauth_timeout": "The eToll server did not respond in time. Please try again.",
+      "oauth_unauthorized": "The eToll server refused the sign-in. Please try again.",
+      "user_rejected_authorize": "Signing in was cancelled or refused ({error})."
     }
   },
   "entity": {

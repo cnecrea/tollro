@@ -3,7 +3,15 @@
     "step": {
       "user": {
         "title": "Conectare la CNAIR eToll",
-        "description": "Introdu datele contului tău eToll — aceleași cu care te autentifici în aplicația TollRo sau pe portal.etoll.ro. Integrarea doar citește informațiile din cont (vehicule, roviniete, facturi și notificări); nu face cumpărături și nu modifică nimic în contul tău.",
+        "description": "Alege cum te autentifici — la fel ca în aplicația TollRo. Integrarea doar citește informațiile din cont (vehicule, roviniete, facturi și notificări); nu face cumpărături și nu modifică nimic în contul tău.\n\nDacă ți-ai creat contul eToll prin ROeID, Google sau eIDAS, nu ai o parolă eToll: alege pagina oficială de autentificare eToll.",
+        "menu_options": {
+          "password": "Cu e-mail (sau telefon) și parolă",
+          "browser": "Prin pagina oficială eToll (ROeID, Google, eIDAS)"
+        }
+      },
+      "password": {
+        "title": "Autentificare cu parolă",
+        "description": "Introdu datele contului tău eToll — aceleași cu care te autentifici în aplicația TollRo sau pe portal.etoll.ro.",
         "data": {
           "username": "Adresă de e-mail sau număr de telefon",
           "password": "Parolă"
@@ -14,6 +22,14 @@
         }
       },
       "reconfigure": {
+        "title": "Actualizează autentificarea",
+        "description": "Alege cum se conectează integrarea la contul tău eToll — de exemplu, după ce ți-ai schimbat parola sau ca să treci pe ROeID, Google ori eIDAS. Autentificarea nouă e verificată înainte de a fi salvată, iar vehiculele, entitățile și istoricul rămân neschimbate.",
+        "menu_options": {
+          "reconfigure_password": "Cu e-mail (sau telefon) și parolă",
+          "reconfigure_browser": "Prin pagina oficială eToll (ROeID, Google, eIDAS)"
+        }
+      },
+      "reconfigure_password": {
         "title": "Actualizează datele de autentificare",
         "description": "Modifică adresa de e-mail (sau numărul de telefon) ori parola folosite de integrare — de exemplu, după ce ți-ai schimbat parola în aplicația TollRo sau pe portal.etoll.ro. Datele noi sunt verificate înainte de a fi salvate, iar vehiculele, entitățile și istoricul rămân neschimbate.",
         "data": {
@@ -34,10 +50,14 @@
         "data_description": {
           "password": "Se păstrează local, în Home Assistant, și e folosită doar pentru a menține contul conectat."
         }
+      },
+      "reauth_browser": {
+        "title": "Reconectează contul eToll",
+        "description": "Home Assistant nu mai are acces la contul {account}. Apasă Trimite: se deschide pagina oficială eToll, unde te autentifici din nou (ROeID, Google sau eIDAS), iar actualizările continuă."
       }
     },
     "error": {
-      "invalid_auth": "Autentificarea a eșuat. Verifică adresa de e-mail (sau numărul de telefon) și parola — sunt aceleași ca în aplicația TollRo.",
+      "invalid_auth": "Autentificarea a eșuat. Verifică adresa de e-mail (sau numărul de telefon) și parola — sunt aceleași ca în aplicația TollRo. Dacă ți-ai creat contul prin ROeID, Google sau eIDAS, nu ai o parolă eToll: revino și alege pagina oficială de autentificare eToll.",
       "cannot_connect": "Serviciul eToll nu a putut fi contactat. Verifică conexiunea la internet și încearcă din nou peste câteva minute; dacă problema persistă, e posibil ca serverele CNAIR să fie temporar indisponibile.",
       "unknown": "A apărut o eroare neașteptată. Activează jurnalizarea de depanare pentru această integrare, încearcă din nou, apoi caută detaliile în jurnalul Home Assistant."
     },
@@ -45,7 +65,18 @@
       "already_configured": "Acest cont eToll este deja adăugat în Home Assistant.",
       "reconfigure_successful": "Datele de autentificare au fost actualizate, iar integrarea s-a reîncărcat.",
       "reauth_successful": "Contul a fost reconectat, iar actualizările au fost reluate.",
-      "wrong_account": "Datele introduse aparțin altui cont eToll decât cel configurat aici. Pentru un alt cont, adaugă integrarea din nou, ca intrare separată."
+      "wrong_account": "Te-ai autentificat în alt cont eToll decât cel configurat aici. Pentru un alt cont, adaugă integrarea din nou, ca intrare separată.",
+      "no_refresh_token": "Serverul eToll nu a acordat acces de durată la cont, așa că integrarea s-ar deconecta după 30 de minute. Încearcă din nou; dacă se repetă, deschide un issue pe GitHub.",
+      "invalid_auth": "Serverul eToll a refuzat accesul obținut din pagina de autentificare. Încearcă din nou.",
+      "cannot_connect": "Serviciul eToll nu a putut fi contactat. Verifică conexiunea la internet și încearcă din nou peste câteva minute.",
+      "unknown": "A apărut o eroare neașteptată. Activează jurnalizarea de depanare pentru această integrare, încearcă din nou, apoi caută detaliile în jurnalul Home Assistant.",
+      "authorize_url_timeout": "Pagina de autentificare eToll nu a putut fi pregătită la timp. Încearcă din nou.",
+      "no_url_available": "Home Assistant nu are o adresă la care să revină după autentificare. Detalii: {docs_url}",
+      "oauth_error": "Serverul eToll a trimis un răspuns neașteptat la autentificare.",
+      "oauth_failed": "Accesul la cont nu a putut fi obținut de la serverul eToll. Încearcă din nou.",
+      "oauth_timeout": "Serverul eToll nu a răspuns la timp. Încearcă din nou.",
+      "oauth_unauthorized": "Serverul eToll a refuzat autentificarea. Încearcă din nou.",
+      "user_rejected_authorize": "Autentificarea a fost anulată sau refuzată ({error})."
     }
   },
   "entity": {
