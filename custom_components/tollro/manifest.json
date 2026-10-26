@@ -5,7 +5,9 @@
     "@cnecrea"
   ],
   "config_flow": true,
-  "dependencies": [],
+  "dependencies": [
+    "auth"
+  ],
   "documentation": "https://github.com/cnecrea/tollro",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/cnecrea/tollro/issues",
