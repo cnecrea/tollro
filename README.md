@@ -27,6 +27,7 @@ Integrarea oferă un dispozitiv pentru cont (notificări, facturi, plăți, star
 - **Datele vehiculului** — număr, VIN, certificat de înmatriculare, clasă de emisii, țară, MTMA, categorie pentru poduri, plus semnalarea datelor care necesită verificare
 - **Statistici pe termen lung** — senzorii de sume se resetează la 1 ianuarie și apar corect în graficele Home Assistant
 - **Valori traduse** — stările și atributele apar în română (sau engleză), datele în format românesc (`29/05/2027 23:59`)
+- **Autentificare și prin ROeID, Google sau eIDAS** — conturile create astfel se conectează prin pagina oficială eToll; Home Assistant primește doar accesul la cont, nu și datele de autentificare
 - **Sesiune păstrată** — autentificarea se reîmprospătează automat, fără să ceară parola la fiecare repornire
 - **Reautentificare și reconfigurare** din interfață, fără a șterge integrarea
 - **Sistem de licență** — testare gratuită 30 de zile; fără licență validă se afișează doar senzorul „Licență necesară”
@@ -48,7 +49,12 @@ Datele vin din API-ul folosit de aplicația TollRo și de portalul eToll (`porta
 | `resources/countries` | Numele țărilor (pentru țara de înmatriculare) |
 | `status/api/components/3` | Pagina publică de status CNAIR (fără autentificare) |
 
-Autentificarea se face la serverul CNAIR (`sso.etoll.ro`) cu utilizator și parolă. Sesiunea durează 30 de minute și se reîmprospătează automat înainte de expirare. Dacă serverul refuză sesiunea, integrarea se reconectează singură cu parola salvată.
+Autentificarea se face la serverul CNAIR (`sso.etoll.ro`), în unul din două moduri:
+
+- **cu e-mail (sau telefon) și parolă** — parola se păstrează local; dacă serverul refuză sesiunea, integrarea se reconectează singură cu ea;
+- **prin pagina oficială eToll** — pentru conturile create prin ROeID, Google sau eIDAS. Te autentifici în pagina eToll, la fel ca în aplicația TollRo, iar Home Assistant primește doar accesul la cont (un token), nu și datele tale de autentificare.
+
+Sesiunea durează 30 de minute și se reîmprospătează automat înainte de expirare.
 
 Datele se actualizează la fiecare **30 de minute**.
 
@@ -78,14 +84,26 @@ Datele se actualizează la fiecare **30 de minute**.
 
 1. **Setări** → **Dispozitive și Servicii** → **Adaugă Integrare**
 2. Caută „**CNAIR eToll**”
-3. Completează formularul:
+3. Alege cum te autentifici — la fel ca în aplicația TollRo:
+
+#### Cu e-mail și parolă
 
 | Câmp | Descriere |
 |------|-----------|
 | **Adresă de e-mail sau număr de telefon** | Datele cu care te autentifici în aplicația TollRo sau pe portal.etoll.ro |
 | **Parolă** | Parola contului eToll — se păstrează local, în Home Assistant |
 
-Datele sunt verificate imediat (autentificare reală). Vehiculele contului sunt descoperite automat.
+#### Prin pagina oficială eToll (ROeID, Google, eIDAS)
+
+Pentru conturile create prin **ROeID**, **Google** sau **eIDAS**: ele nu au o parolă eToll, deci nu pot folosi varianta de mai sus.
+
+1. Alege „**Prin pagina oficială eToll (ROeID, Google, eIDAS)**” — se deschide o fereastră nouă, cu pagina de autentificare eToll
+2. Apasă **Continuă cu ROeID** (sau Google / eIDAS) și autentifică-te ca în aplicația TollRo
+3. La final fereastra se închide singură, iar integrarea se adaugă
+
+> La prima folosire, pagina **My Home Assistant** îți poate cere adresa instanței tale (de exemplu `http://homeassistant.local:8123`). Prin ea revine browserul în Home Assistant după autentificare.
+
+Indiferent de metodă, contul e verificat imediat (autentificare reală). Vehiculele contului sunt descoperite automat.
 
 ### Pasul 2 — Licență
 
@@ -95,13 +113,13 @@ Licența se introduce din **Setări** → **Dispozitive și Servicii** → **CNA
 
 ### Pasul 3 — Reconfigurare (opțional)
 
-Dacă ți-ai schimbat parola sau adresa de e-mail în aplicația TollRo:
+Dacă ți-ai schimbat parola sau adresa de e-mail în aplicația TollRo, ori vrei să treci pe ROeID, Google sau eIDAS:
 
 1. **Setări** → **Dispozitive și Servicii** → **CNAIR eToll**
 2. Meniul (⋮) → **Reconfigurare**
-3. Introdu datele noi → integrarea se reîncarcă automat; vehiculele, entitățile și istoricul rămân
+3. Alege metoda și autentifică-te din nou → integrarea se reîncarcă automat; vehiculele, entitățile și istoricul rămân
 
-Dacă parola nu mai este acceptată, Home Assistant îți cere singur să **reconectezi contul** (notificare de reautentificare) — introduci doar parola actuală.
+Dacă autentificarea nu mai este acceptată, Home Assistant îți cere singur să **reconectezi contul** (notificare de reautentificare): introduci parola actuală sau, pentru conturile conectate prin pagina eToll, te autentifici din nou în acea pagină.
 
 ---
 
@@ -413,6 +431,7 @@ custom_components/tollro/
 ├── helpers.py           # Formatare date (ora României), cheltuieli și plăți pe ani
 ├── license.py           # Manager licență (server-side, Ed25519, HMAC-SHA256)
 ├── manifest.json        # Metadata integrare
+├── oauth.py             # Autentificarea prin pagina oficială eToll (ROeID, Google, eIDAS)
 ├── sensor.py            # Senzorii contului și ai vehiculelor, „Licență necesară”
 ├── strings.json         # Traduceri implicite (engleză)
 ├── brand/               # Pictograma integrării
@@ -427,7 +446,7 @@ custom_components/tollro/
 
 - **Home Assistant** 2025.11 sau mai nou
 - **HACS** (opțional, pentru instalare ușoară)
-- **Cont CNAIR eToll** activ (aplicația TollRo sau portal.etoll.ro), cu e-mail sau telefon și parolă
+- **Cont CNAIR eToll** activ (aplicația TollRo sau portal.etoll.ro) — cu e-mail sau telefon și parolă, ori creat prin ROeID, Google sau eIDAS
 - **Licență** validă după perioada de evaluare — [hubinteligent.org/donate?ref=tollro](https://hubinteligent.org/donate?ref=tollro)
 
 Singura dependență, `cryptography` (pentru verificarea licenței), este deja inclusă în Home Assistant.
@@ -449,6 +468,8 @@ Singura dependență, `cryptography` (pentru verificarea licenței), este deja i
 6. **Istoric** — totalurile pe ani acoperă cel mult ultimii 5 ani.
 
 7. **Interval fix** — datele se actualizează la 30 de minute; intervalul nu este configurabil.
+
+8. **Autentificarea prin pagina eToll** depinde de configurarea serverului de autentificare CNAIR. Dacă CNAIR o schimbă, conturile deja conectate continuă să funcționeze, dar o conectare nouă prin această metodă poate necesita o actualizare a integrării.
 
 ---
 
