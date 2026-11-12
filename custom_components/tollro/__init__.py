@@ -57,19 +57,26 @@ def _update_license_notifications(hass: HomeAssistant, mgr: LicenseManager) -> N
 
     if mgr.has_license:
         issue_id = "license_expired"
-        notif_title = f"{NAME} — Licența a expirat"
+        notif_title = "Licența CNAIR eToll a expirat"
         notif_message = (
-            f"Licența pentru integrarea **{NAME}** a expirat.\n\n"
-            "Senzorii sunt dezactivați până la reînnoirea licenței.\n\n"
-            f"[Reînnoiește licența]({LICENSE_PURCHASE_URL})"
+            "Senzorii integrării **CNAIR eToll** nu se mai actualizează până la reînnoirea licenței.\n\n"
+            f"[Obține o licență nouă]({LICENSE_PURCHASE_URL})"
+        )
+    elif mgr.status == "expired":
+        issue_id = "trial_expired"
+        notif_title = "Perioada de test CNAIR eToll s-a încheiat"
+        notif_message = (
+            "Senzorii integrării **CNAIR eToll** nu se mai actualizează până la activarea unei licențe.\n\n"
+            f"[Obține o licență]({LICENSE_PURCHASE_URL})"
         )
     else:
+        # „unlicensed”: nicio licență activă sau licența nu a putut fi verificată
         issue_id = "trial_expired"
-        notif_title = f"{NAME} — Licența de probă a expirat"
+        notif_title = "Licența CNAIR eToll nu este activă"
         notif_message = (
-            f"Perioada de evaluare gratuită pentru integrarea **{NAME}** s-a încheiat.\n\n"
-            "Senzorii sunt dezactivați până la obținerea unei licențe.\n\n"
-            f"[Obține o licență acum]({LICENSE_PURCHASE_URL})"
+            "Integrarea **CNAIR eToll** nu are o licență activă sau licența nu a putut fi verificată, așa că senzorii "
+            "nu se actualizează. Cheia se introduce în Configurare → Licență.\n\n"
+            f"[Obține o licență]({LICENSE_PURCHASE_URL})"
         )
 
     other_id = "license_expired" if issue_id == "trial_expired" else "trial_expired"
